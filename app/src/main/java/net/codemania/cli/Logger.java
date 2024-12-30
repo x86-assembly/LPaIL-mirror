@@ -90,14 +90,14 @@ public static void err ( Object x )
 }
 
 
-private class ANSII
+private static class ANSII
 {
 	public ANSII ( boolean enabled )
 	{
 		this.enabled = enabled;
 	}
 
-	private boolean enabled = true;
+	private boolean enabled;
 
 	private String format ( char mode, char color )
 	{

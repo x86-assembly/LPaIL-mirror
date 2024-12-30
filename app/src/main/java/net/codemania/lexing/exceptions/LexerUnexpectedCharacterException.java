@@ -5,7 +5,7 @@ import net.codemania.FilePosition;
 public class LexerUnexpectedCharacterException extends LexingException
 {
 public final char found, expected;
-public String reason;
+public final String reason;
 
 public LexerUnexpectedCharacterException ( char found, String expected, FilePosition pos )
 {
@@ -20,7 +20,7 @@ public LexerUnexpectedCharacterException ( char found, char expected, FilePositi
 	super( String.format( "Unexpected character '%c' at %s, expected '%c'", found, pos, expected ) );
 	this.found = found;
 	this.expected = expected;
-	this.reason = "Unexpected characted";
+	this.reason = "Unexpected character";
 }
 
 }

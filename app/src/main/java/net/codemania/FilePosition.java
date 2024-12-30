@@ -1,16 +1,7 @@
 package net.codemania;
 
-public class FilePosition
+public record FilePosition( int line, int col, String filename )
 {
-public final int line, col;
-public final String filename;
-
-public FilePosition ( int line, int col, String filename )
-{
-	this.line = line;
-	this.col = col;
-	this.filename = filename;
-}
 
 @Override
 public String toString ()

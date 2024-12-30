@@ -25,7 +25,7 @@ public Lexer ( BufferedReader reader, String name )
 private char current;
 private int line = 1, column = 1;
 
-private char readNext ()
+private void readNext ()
 {
 	// what was read
 	int read;
@@ -36,12 +36,10 @@ private char readNext ()
 		read = -1;
 	}
 	this.current = (char) read;
-	if ( read == -1 ) return (char) -1;
 	if ( read == '\n' ) {
 		line++;
 		column = 1;
 	} else {column++;}
-	return this.current;
 
 }
 

@@ -39,7 +39,7 @@ public static int parseNumeral ( String unparsed, FilePosition pos ) throws Lexe
 	// 1000 1000 100 500 50 10 10 5
 
 
-	List<Integer> result = new ArrayList<>( values );
+	List<Integer> result;
 	while ( values.size() != 1 ) {
 		result = new ArrayList<>();
 		for ( int i = 0; i < values.size(); i++ ) {
@@ -60,8 +60,8 @@ public static int parseNumeral ( String unparsed, FilePosition pos ) throws Lexe
 		}
 		if ( result.size() != 1 ) {
 			int first = result.getFirst();
-			result.remove( 0 );
-			result.set( 0, result.get( 0 ) + first );
+			result.removeFirst();
+			result.set( 0, result.getFirst() + first );
 		}
 		values = new ArrayList<>( result );
 
