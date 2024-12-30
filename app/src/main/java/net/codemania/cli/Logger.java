@@ -7,7 +7,7 @@ public class Logger
 
 private static Logger logger = null;
 
-public PrintStream info, warn, err;
+public PrintStream infoStream, warnStream, errStream;
 public boolean shouldLogInfo, shouldLogWarn, shouldLogErr;
 
 private ANSII ansii;
@@ -15,9 +15,9 @@ private ANSII ansii;
 private Logger ()
 {
 	logger = this;
-	this.info = System.out; // might also be changed to default of `System.err`
-	this.warn = System.err;
-	this.err = System.err;
+	this.infoStream = System.out; // might also be changed to default of `System.err`
+	this.warnStream = System.err;
+	this.errStream = System.err;
 	this.shouldLogInfo = this.shouldLogWarn = this.shouldLogErr = true;
 	this.ansii = new ANSII( true );
 }
@@ -41,28 +41,28 @@ public void useColor ( boolean use )
 public void logInfo ( Object x )
 {
 	if ( !shouldLogInfo ) return;
-	this.info.print( "[INFO] " );
-	this.info.println( x );
+	this.infoStream.print( "[INFO] " );
+	this.infoStream.println( x );
 }
 
 public void logWarning ( Object x )
 {
 	if ( !shouldLogWarn ) return;
-	this.warn.print( ansii.format( ANSII.YELLOW ) );
-	this.warn.print( "[WARN] " );
-	this.warn.print( ansii.reset() );
-	this.warn.println( x );
+	this.warnStream.print( ansii.format( ANSII.YELLOW ) );
+	this.warnStream.print( "[WARN] " );
+	this.warnStream.print( ansii.reset() );
+	this.warnStream.println( x );
 }
 
 public void logError ( Object x )
 {
 	if ( !shouldLogErr ) return;
-	this.err.print( ansii.format( ANSII.BACKGR, ANSII.RED ) );
-	this.err.print( "[ERROR]" );
-	this.err.print( ansii.format( ANSII.RED ) );
-	this.err.print( ' ' );
-	this.err.print( x );
-	this.err.println( ansii.reset() );
+	this.errStream.print( ansii.format( ANSII.BACKGR, ANSII.RED ) );
+	this.errStream.print( "[ERROR]" );
+	this.errStream.print( ansii.format( ANSII.RED ) );
+	this.errStream.print( ' ' );
+	this.errStream.print( x );
+	this.errStream.println( ansii.reset() );
 }
 
 // Not sure if this should be public, but for now it is
