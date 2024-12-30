@@ -4,20 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexingException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/resources/test.lpl" afterDir="false" />
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="started with lexer(doesn't work yet).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/cli/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/cli/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.lpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/resources/test.lpl" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/resources/test.lpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +86,9 @@
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -116,6 +111,9 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -177,12 +175,26 @@
       <workItem from="1735424820728" duration="3905000" />
       <workItem from="1735464511510" duration="9010000" />
       <workItem from="1735504656541" duration="9920000" />
-      <workItem from="1735565166394" duration="5797000" />
+      <workItem from="1735565166394" duration="11217000" />
+      <workItem from="1735588201611" duration="1633000" />
     </task>
+    <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
+      <option name="closed" value="true" />
+      <created>1735582843827</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1735582843827</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="started with lexer(doesn't work yet)." />
+    <option name="LAST_COMMIT_MESSAGE" value="started with lexer(doesn't work yet)." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

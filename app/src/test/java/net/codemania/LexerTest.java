@@ -26,14 +26,14 @@ void canLexBasicFile ()
 
 	List<Token> tokens;
 	try {
-		tokens = lx.lex();
+		tokens = lx.lexAll();
 	} catch ( LexerUnexpectedCharacterException e ) {
 		System.out.println( e.getMessage() );
 		throw new AssertionError( String.format( "Failed to lex file %s: %s", file.getName(), e.getMessage() ) );
 	}
 	System.out.println( "Successfully lexed a basic file. Tokens:" );
 	for ( Token t : tokens ) {
-		System.out.print( t.getType().name() + "(" + t.getVal() + "), " );
+		System.out.print( t.toString() + ", " );
 	}
 
 }

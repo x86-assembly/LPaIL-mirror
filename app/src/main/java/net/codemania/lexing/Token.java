@@ -60,5 +60,10 @@ public void setVal ( Object val )
 	this.val = val;
 }
 
+@Override
+public String toString ()
+{
+	return this.type.name() + ( this.val == null ? "": ( "(" + this.val + ")" ) );
 
+}
 }
