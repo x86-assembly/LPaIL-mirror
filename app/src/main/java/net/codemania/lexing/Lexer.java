@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Lexer
 {
@@ -83,8 +84,7 @@ public List<Token> lexAll () throws LexerUnexpectedCharacterException
 
 	while ( current != (char) -1 ) {
 		skipWhitespace();
-		Token t;
-		tokens.add( t = switch ( current ) {
+		tokens.add( switch ( current ) {
 			case '~' -> lexSimpleToken( TokenType.Tilde );
 			case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
 			case ']' -> lexSimpleToken( TokenType.BracketSquClose );
@@ -96,7 +96,6 @@ public List<Token> lexAll () throws LexerUnexpectedCharacterException
 
 			default -> null;
 		} );
-		Logger.info( "Parsed " + t );
 	}
 	return tokens;
 }
@@ -120,12 +119,86 @@ private Token lexMinus () throws LexerUnexpectedCharacterException
 	return t;
 }
 
+
+private enum NumberType
+{
+	Binary,
+	Senary,
+	Octal,
+	Decimal,
+	Hexadecimal,
+	Roman
+}
+
 private Token lexIntegerLiteral () throws LexerUnexpectedCharacterException
 {
+	// ib0101	binary
+	// is425	senary
+	// io12 	octal
+	// i123		decimal
+	// id123	decimal
+	// i-123
+	// io72		octal
+	// ixfe		hex
+	// irIVV	roman
 	//TODO for now only 'i15' is possible
-	Token t = new Token( TokenType.IntegerLiteral, pos() );
-	consume( "i15" );
-	return t;
+	Token token = new Token( TokenType.IntegerLiteral, pos() );
+	consume( 'i' );
+	// mode: binary, senary, octal, decimal, hexadecimal, roman
+	NumberType mode = NumberType.Decimal;
+	if ( Character.isAlphabetic( current ) ) {
+		mode = switch ( current ) {
+			case 'b' -> NumberType.Binary;
+			case 's' -> NumberType.Senary;
+			case 'o' -> NumberType.Octal;
+			case 'd' -> NumberType.Decimal;
+			case 'x' -> NumberType.Hexadecimal;
+			case 'r' -> NumberType.Roman;
+			default ->
+				throw new LexerUnexpectedCharacterException( current, "invalid integer " + "type", pos() );
+		};
+		readNext();
+	}
+	// sign: + -
+	boolean isnegative = false;
+	if ( current == '+' || current == '-' ) {
+		if ( current == '-' ) {
+			isnegative = true;
+		}
+		readNext();
+	}
+
+	// read numerals
+	Pattern allowedNumerals = Pattern.compile( switch ( mode ) {
+		case Binary -> "[01]";
+		case Senary -> "[0-5]";
+		case Octal -> "[0-7]";
+		case Decimal -> "[0-9]";
+		case Hexadecimal -> "[0-9a-fA-F]";
+		case Roman -> "[IVXLCDM]";
+	} );
+
+	StringBuilder numerals = new StringBuilder();
+	while ( allowedNumerals.matcher( String.valueOf( current ) ).matches() ) {
+		numerals.append( current );
+		readNext();
+	}
+	if ( mode == NumberType.Roman ) {
+		token.setVal( ( isnegative ? -1: 1 ) * RomanNumeralParser.parseNumeral( numerals.toString() ) );
+	} else {
+		token.setVal( ( isnegative ? -1: 1 ) * Integer.parseInt(
+			numerals.toString(), switch ( mode ) {
+				case Binary -> 2;
+				case Senary -> 6;
+				case Octal -> 8;
+				case Decimal -> 10;
+				case Hexadecimal -> 16;
+				case Roman -> throw new RuntimeException( "Impossible!" );
+			} ) );
+	}
+
+	return token;
+
 }
 
 private Token lexLabel () throws LexerUnexpectedCharacterException
