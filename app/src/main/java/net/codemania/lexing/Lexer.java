@@ -78,10 +78,10 @@ public List<Token> lexAll () throws LexerUnexpectedCharacterException
 {
 	readNext();
 
+	skipWhitespace();
 	List<Token> tokens = new LinkedList<>();
 
 	while ( current != (char) -1 ) {
-		skipWhitespace();
 		tokens.add( switch ( current ) {
 			case '~' -> lexSimpleToken( TokenType.Tilde );
 			case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
@@ -92,8 +92,10 @@ public List<Token> lexAll () throws LexerUnexpectedCharacterException
 			case 'i' -> lexIntegerLiteral();
 			case '.' -> lexLabel();
 
-			default -> null;
+			default ->
+				throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
 		} );
+		skipWhitespace();
 	}
 	return tokens;
 }
