@@ -4,7 +4,9 @@ import net.codemania.cli.Logger;
 import net.codemania.lexing.Lexer;
 import net.codemania.lexing.RomanNumeralParser;
 import net.codemania.lexing.Token;
+import net.codemania.lexing.TokenType;
 import net.codemania.lexing.exceptions.LexerUnexpectedCharacterException;
+import net.codemania.lexing.exceptions.LexingException;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LexerTest
 {
@@ -32,7 +35,7 @@ void canLexBasicFile ()
 	List<Token> tokens;
 	try {
 		tokens = lx.lexAll();
-	} catch ( LexerUnexpectedCharacterException e ) {
+	} catch ( LexingException e ) {
 		System.out.println( e.getMessage() );
 		throw new AssertionError( String.format( "Failed to lex file %s: %s", file.getName(), e.getMessage() ) );
 	}
@@ -45,6 +48,211 @@ void canLexBasicFile ()
 	assertEquals( "Tilde, BracketSquOpen, BracketSquClose, Semicolon, ArrowThinLeft, IntegerLiteral(15), IntegerLiteral(5), IntegerLiteral(161), IntegerLiteral(10), IntegerLiteral(123), IntegerLiteral(123), IntegerLiteral(-123), IntegerLiteral(58), IntegerLiteral(254), IntegerLiteral(9), Label(label), Tilde, BracketSquOpen, IntegerLiteral(-14), BracketSquClose, ArrowThinLeft, ArrowThinLeft, ArrowThinLeft, BracketSquOpen, BracketSquOpen, BracketSquOpen, BracketSquClose, BracketSquClose, ArrowThinLeft, Label(exit)", j.toString() );
 
 }
+
+
+@Test
+public void testBinaryNoSign ()
+{
+	checkNumeric( 5, "ib101" );
+}
+
+@Test
+public void testBinaryPlus ()
+{
+	checkNumeric( 5, "ib+101" );
+}
+
+@Test
+public void testBinaryMinus ()
+{
+	checkNumeric( -5, "ib-101" );
+}
+
+@Test
+public void testSenaryNoSign ()
+{
+	checkNumeric( 161, "is425" );
+}
+
+@Test
+public void testSenaryPlus ()
+{
+	checkNumeric( 161, "is+425" );
+}
+
+@Test
+public void testSenaryMinus ()
+{
+	checkNumeric( -161, "is-425" );
+}
+
+@Test
+public void testOctalNoSign ()
+{
+	checkNumeric( 10, "io12" );
+}
+
+@Test
+public void testOctalPlus ()
+{
+	checkNumeric( 10, "io+12" );
+}
+
+@Test
+public void testOctalMinus ()
+{
+	checkNumeric( -10, "io-12" );
+}
+
+@Test
+public void testDecimalNoSign ()
+{
+	checkNumeric( 123, "i123" );
+}
+
+@Test
+public void testDecimalPlus ()
+{
+	checkNumeric( 123, "i+123" );
+}
+
+@Test
+public void testDecimalMinus ()
+{
+	checkNumeric( -123, "i-123" );
+}
+
+@Test
+public void testHexadecimalNoSign ()
+{
+	checkNumeric( 255, "ixff" );
+}
+
+@Test
+public void testHexadecimalPlus ()
+{
+	checkNumeric( 255, "ix+ff" );
+}
+
+@Test
+public void testHexadecimalMinus ()
+{
+	checkNumeric( -255, "ix-ff" );
+}
+
+@Test
+public void testRomanNoSign ()
+{
+	checkNumeric( 4, "irIV" );
+}
+
+@Test
+public void testRomanPlus ()
+{
+	checkNumeric( 4, "ir+IV" );
+}
+
+@Test
+public void testRomanMinus ()
+{
+	checkNumeric( -4, "ir-IV" );
+}
+
+private void checkNumeric ( int expected, String s )
+{
+
+	Token t = null;
+	try {
+		t = new Lexer( s ).lexSingularToken();
+	} catch ( LexingException e ) {
+		throw new RuntimeException( "Unable to parse \"%s\", %s".formatted( s, e ) );
+	}
+	assertEquals( TokenType.IntegerLiteral, t.getType() );
+	assertEquals( expected, t.getVal() );
+
+}
+
+@Test
+public void testTilde ()
+{
+	assertType( TokenType.Tilde, "~" );
+}
+
+@Test
+public void testBrSquOpen ()
+{
+	assertType( TokenType.BracketSquOpen, "[" );
+}
+
+@Test
+public void testBrSquClose ()
+{
+	assertType( TokenType.BracketSquClose, "]" );
+}
+
+@Test
+public void testIntegerLiteral ()
+{
+	assertType( TokenType.IntegerLiteral, "i123" );
+}
+
+@Test
+public void testArrowThinLeft ()
+{
+	assertType( TokenType.ArrowThinLeft, "->" );
+}
+
+@Test
+public void testLabel ()
+{
+	assertType( TokenType.Label, ".print" );
+	assertType( TokenType.Label, ".exit" );
+	assertType( TokenType.Label, ".somethingreallyreallyinsanelylong" );
+	assertHasValue( "print", ".print" );
+}
+
+@Test
+public void testSemicolon ()
+{
+	assertType( TokenType.Semicolon, ";" );
+}
+
+private void assertType ( TokenType expected, String s )
+{
+	Token t;
+	try {
+		t = new Lexer( s ).lexSingularToken();
+	} catch ( LexingException e ) {
+		throw new RuntimeException( "Unable to parse \"%s\", %s".formatted( s, e ) );
+	}
+	assertEquals( expected, t.getType() );
+}
+
+private void assertHasValue ( Object expected, String s )
+{
+	Token t;
+	try {
+		t = new Lexer( s ).lexSingularToken();
+	} catch ( LexingException e ) {
+		throw new RuntimeException( "Unable to parse \"%s\", %s".formatted( s, e ) );
+	}
+	assertEquals( expected, t.getVal() );
+}
+
+@Test
+public void cantLexEmptyIntegerLiterals ()
+{
+	assertCantLex( "i" );
+	assertCantLex( "ir+" );
+	assertCantLex( "ib-" );
+	assertCantLex( "i-" );
+}
+
+private void assertCantLex ( String invalid )
+{
+	assertThrows( LexingException.class, new Lexer( invalid )::lexSingularToken );
+}
+
 
 @Test
 void romanNumeralTest () throws LexerUnexpectedCharacterException

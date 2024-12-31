@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="started with lexer(doesn't work yet).">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/RomanNumeralParser.java" afterDir="false" />
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerMissingValueException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/resources/test.lpl" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/resources/test.lpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +113,7 @@
     "Gradle.LPaIL:app [clean].executor": "Run",
     "Gradle.LPaIL:app [run].executor": "Run",
     "Gradle.LPaIL:app [test].executor": "Run",
+    "Gradle.LexerTest.canLexNumber.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
@@ -126,6 +126,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.sourceCode.Java",
     "vue.rearranger.settings.migration": "true"
   }
@@ -139,7 +140,7 @@
       <recent name="$PROJECT_DIR$/app/src/examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LPaIL:app [build]">
+  <component name="RunManager" selected="Gradle.LPaIL:app [test]">
     <configuration name="LPaIL:app [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -206,8 +207,56 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="LPaIL:app [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="LexerTest.canLexNumber" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:test" />
+            <option value="--tests" />
+            <option value="&quot;net.codemania.LexerTest.canLexNumber&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.LPaIL:app [test]" />
+        <item itemvalue="Gradle.LexerTest.canLexNumber" />
         <item itemvalue="Gradle.LPaIL:app [build]" />
         <item itemvalue="Gradle.LPaIL:app [clean]" />
         <item itemvalue="Gradle.LPaIL:app [run]" />
@@ -234,7 +283,7 @@
       <workItem from="1735464511510" duration="9010000" />
       <workItem from="1735504656541" duration="9920000" />
       <workItem from="1735565166394" duration="11217000" />
-      <workItem from="1735588201611" duration="11590000" />
+      <workItem from="1735588201611" duration="21973000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />
@@ -244,7 +293,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735582843827</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Lexer now supports roman numerals!">
+      <option name="closed" value="true" />
+      <created>1735599997782</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1735599997782</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Lexer now supports roman numerals!">
+      <option name="closed" value="true" />
+      <created>1735600025821</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1735600025821</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF">
+      <option name="closed" value="true" />
+      <created>1735604419176</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1735604419176</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +336,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="started with lexer(doesn't work yet)." />
-    <option name="LAST_COMMIT_MESSAGE" value="started with lexer(doesn't work yet)." />
+    <MESSAGE value="Lexer now supports roman numerals!" />
+    <MESSAGE value="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

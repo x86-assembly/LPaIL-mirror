@@ -2,10 +2,13 @@ package net.codemania.lexing;
 
 import net.codemania.FilePosition;
 import net.codemania.cli.Logger;
+import net.codemania.lexing.exceptions.LexerMissingValueException;
 import net.codemania.lexing.exceptions.LexerUnexpectedCharacterException;
+import net.codemania.lexing.exceptions.LexingException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -16,10 +19,28 @@ public class Lexer
 private BufferedReader reader;
 private String name;
 
+public Lexer ( String unbuffered )
+{
+	this( unbuffered, null );
+}
+
+public Lexer ( String unbuffered, String name )
+{
+	this.reader = new BufferedReader( new StringReader( unbuffered ) );
+	if ( name == null ) {
+		this.name = unbuffered.substring( 0, Math.min( unbuffered.length(), 50 ) );
+	} else {this.name = name;}
+	if ( unbuffered.length() > 2048 ) {
+		Logger.warn( "Lexing large unbuffered file %s".formatted( this.name ) );
+	}
+	readNext(); // make sure that 'current' contains the first char
+}
+
 public Lexer ( BufferedReader reader, String name )
 {
 	this.reader = reader;
 	this.name = name;
+	readNext(); // same
 }
 
 private char current;
@@ -74,30 +95,34 @@ private int skipWhitespace ()
 }
 
 
-public List<Token> lexAll () throws LexerUnexpectedCharacterException
+public List<Token> lexAll () throws LexingException
 {
-	readNext();
 
 	skipWhitespace();
 	List<Token> tokens = new LinkedList<>();
 
 	while ( current != (char) -1 ) {
-		tokens.add( switch ( current ) {
-			case '~' -> lexSimpleToken( TokenType.Tilde );
-			case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
-			case ']' -> lexSimpleToken( TokenType.BracketSquClose );
-			case ';' -> lexSimpleToken( TokenType.Semicolon );
-			// more complex tokens
-			case '-' -> lexMinus();
-			case 'i' -> lexIntegerLiteral();
-			case '.' -> lexLabel();
-
-			default ->
-				throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
-		} );
+		tokens.add( lexSingularToken() );
 		skipWhitespace();
 	}
 	return tokens;
+}
+
+public Token lexSingularToken () throws LexingException
+{
+
+	return switch ( current ) {
+		case '~' -> lexSimpleToken( TokenType.Tilde );
+		case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
+		case ']' -> lexSimpleToken( TokenType.BracketSquClose );
+		case ';' -> lexSimpleToken( TokenType.Semicolon );
+		// more complex tokens
+		case '-' -> lexMinus();
+		case 'i' -> lexIntegerLiteral();
+		case '.' -> lexLabel();
+
+		default -> throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
+	};
 }
 
 // assumes `current` has already been validated
@@ -130,7 +155,7 @@ private enum NumberType
 	Roman
 }
 
-private Token lexIntegerLiteral () throws LexerUnexpectedCharacterException
+private Token lexIntegerLiteral () throws LexingException
 {
 	// ib0101	binary
 	// is425	senary
@@ -182,6 +207,9 @@ private Token lexIntegerLiteral () throws LexerUnexpectedCharacterException
 	while ( allowedNumerals.matcher( String.valueOf( current ) ).matches() ) {
 		numerals.append( current );
 		readNext();
+	}
+	if ( numerals.isEmpty() ) {
+		throw new LexerMissingValueException( "Integer literal", "value", pos() );
 	}
 	if ( mode == NumberType.Roman ) {
 		token.setVal( ( isnegative ? -1: 1 ) * RomanNumeralParser.parseNumeral( numerals.toString() ) );

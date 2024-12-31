@@ -3,7 +3,7 @@ package net.codemania;
 import net.codemania.cli.Logger;
 import net.codemania.lexing.Lexer;
 import net.codemania.lexing.Token;
-import net.codemania.lexing.exceptions.LexerUnexpectedCharacterException;
+import net.codemania.lexing.exceptions.LexingException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,7 +52,7 @@ public static int mainWrapper ( String[] args )
 		for ( Token t : tokens ) {
 			Logger.info( t );
 		}
-	} catch ( LexerUnexpectedCharacterException e ) {
+	} catch ( LexingException e ) {
 		Logger.err( "Failed to lex: " + e.getMessage() );
 	}
 
