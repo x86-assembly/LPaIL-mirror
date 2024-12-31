@@ -42,6 +42,7 @@ void canLexBasicFile ()
 		j.add( t.toString() );
 	}
 	Logger.info( j.toString() );
+	assertEquals( "Tilde, BracketSquOpen, BracketSquClose, Semicolon, ArrowThinLeft, IntegerLiteral(15), IntegerLiteral(5), IntegerLiteral(161), IntegerLiteral(10), IntegerLiteral(123), IntegerLiteral(123), IntegerLiteral(-123), IntegerLiteral(58), IntegerLiteral(254), IntegerLiteral(9), Label(label), Tilde, BracketSquOpen, IntegerLiteral(-14), BracketSquClose, ArrowThinLeft, ArrowThinLeft, ArrowThinLeft, BracketSquOpen, BracketSquOpen, BracketSquOpen, BracketSquClose, BracketSquClose, ArrowThinLeft, Label(exit)", j.toString() );
 
 }
 
