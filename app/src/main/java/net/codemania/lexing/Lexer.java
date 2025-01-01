@@ -1,6 +1,7 @@
 package net.codemania.lexing;
 
 import net.codemania.FilePosition;
+import net.codemania.TokenStream;
 import net.codemania.cli.Logger;
 import net.codemania.lexing.exceptions.LexerMissingValueException;
 import net.codemania.lexing.exceptions.LexerUnexpectedCharacterException;
@@ -13,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Lexer
+public class Lexer implements TokenStream
 {
 
 private BufferedReader reader;
@@ -43,8 +44,68 @@ public Lexer ( BufferedReader reader, String name )
 	readNext(); // same
 }
 
+
+public List<Token> lexAll () throws LexingException
+{
+
+	skipWhitespace();
+	List<Token> tokens = new LinkedList<>();
+
+	while ( current != (char) -1 ) {
+		tokens.add( nextToken() );
+		skipWhitespace();
+	}
+	return tokens;
+}
+
+@Override
+public Token nextToken () throws LexingException
+{
+	if ( !hasMoreTokens() ) {
+		return null;
+	}
+	return switch ( current ) {
+		case '~' -> lexSimpleToken( TokenType.Tilde );
+		case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
+		case ']' -> lexSimpleToken( TokenType.BracketSquClose );
+		case ';' -> lexSimpleToken( TokenType.Semicolon );
+		// more complex tokens
+		case '-' -> lexMinus();
+		case 'i' -> lexIntegerLiteral();
+		case '.' -> lexLabel();
+
+		default -> throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
+	};
+}
+
+
+@Override
+public boolean hasMoreTokens ()
+{
+	// if current is eof, no more Tokens are available
+	return current != (char) -1;
+}
+
+@Override
+public void reset () throws IOException
+{
+	this.reader.reset();
+	// reset position
+	this.line = 1;
+	this.column = 0;
+	readNext(); // set current
+}
+
+@Override
+public void close () throws IOException
+{
+	this.reader.close();
+}
+
+
 private char current;
-private int line = 1, column = 1;
+// column to zero, because first char has not been read yet
+private int line = 1, column = 0;
 
 private void readNext ()
 {
@@ -95,36 +156,6 @@ private int skipWhitespace ()
 }
 
 
-public List<Token> lexAll () throws LexingException
-{
-
-	skipWhitespace();
-	List<Token> tokens = new LinkedList<>();
-
-	while ( current != (char) -1 ) {
-		tokens.add( lexSingularToken() );
-		skipWhitespace();
-	}
-	return tokens;
-}
-
-public Token lexSingularToken () throws LexingException
-{
-
-	return switch ( current ) {
-		case '~' -> lexSimpleToken( TokenType.Tilde );
-		case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
-		case ']' -> lexSimpleToken( TokenType.BracketSquClose );
-		case ';' -> lexSimpleToken( TokenType.Semicolon );
-		// more complex tokens
-		case '-' -> lexMinus();
-		case 'i' -> lexIntegerLiteral();
-		case '.' -> lexLabel();
-
-		default -> throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
-	};
-}
-
 // assumes `current` has already been validated
 private Token lexSimpleToken ( TokenType type )
 {
@@ -132,6 +163,7 @@ private Token lexSimpleToken ( TokenType type )
 	readNext();
 	return t;
 }
+
 
 private Token lexMinus () throws LexerUnexpectedCharacterException
 {

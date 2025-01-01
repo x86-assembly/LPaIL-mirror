@@ -5,11 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerMissingValueException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/TokenStream.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeASTRoot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeProcedureInvocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeBlankInternal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/expression/NodeExpressionLiteralInteger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTInternalNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTLeafNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/exceptions/ParserUnexpectedSymbolException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/exceptions/ParsingException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,6 +94,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -114,6 +128,8 @@
     "Gradle.LPaIL:app [run].executor": "Run",
     "Gradle.LPaIL:app [test].executor": "Run",
     "Gradle.LexerTest.canLexNumber.executor": "Debug",
+    "Gradle.LexerTest.executor": "Run",
+    "OverrideImplement.generate.javadoc": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
@@ -140,7 +156,7 @@
       <recent name="$PROJECT_DIR$/app/src/examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LPaIL:app [test]">
+  <component name="RunManager" selected="Gradle.LexerTest">
     <configuration name="LPaIL:app [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -185,28 +201,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="LPaIL:app [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="LPaIL:app [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -227,6 +221,30 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="LexerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:test" />
+            <option value="--tests" />
+            <option value="&quot;net.codemania.LexerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="LexerTest.canLexNumber" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -255,11 +273,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.LexerTest" />
         <item itemvalue="Gradle.LPaIL:app [test]" />
         <item itemvalue="Gradle.LexerTest.canLexNumber" />
         <item itemvalue="Gradle.LPaIL:app [build]" />
         <item itemvalue="Gradle.LPaIL:app [clean]" />
-        <item itemvalue="Gradle.LPaIL:app [run]" />
       </list>
     </recent_temporary>
   </component>
@@ -283,7 +301,8 @@
       <workItem from="1735464511510" duration="9010000" />
       <workItem from="1735504656541" duration="9920000" />
       <workItem from="1735565166394" duration="11217000" />
-      <workItem from="1735588201611" duration="21973000" />
+      <workItem from="1735588201611" duration="22443000" />
+      <workItem from="1735657514483" duration="22052000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />

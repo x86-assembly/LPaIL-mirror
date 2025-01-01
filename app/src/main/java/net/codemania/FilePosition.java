@@ -6,7 +6,7 @@ public record FilePosition( int line, int col, String filename )
 @Override
 public String toString ()
 {
-	StringBuilder sb = new StringBuilder();
+	StringBuilder sb = new StringBuilder( "at " );
 	if ( line == -1 ) {
 		sb.append( "unknown position" );
 	} else {

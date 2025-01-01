@@ -1,6 +1,5 @@
 package net.codemania;
 
-import net.codemania.cli.Logger;
 import net.codemania.lexing.Lexer;
 import net.codemania.lexing.RomanNumeralParser;
 import net.codemania.lexing.Token;
@@ -9,46 +8,11 @@ import net.codemania.lexing.exceptions.LexerUnexpectedCharacterException;
 import net.codemania.lexing.exceptions.LexingException;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.List;
-import java.util.StringJoiner;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LexerTest
 {
-@Test
-void canLexBasicFile ()
-{
-	File file = new File( "./src/test/resources/test.lpl" );
-	Lexer lx;
-	try {
-		lx = new Lexer( new BufferedReader( new FileReader( file ) ), "canLexBasicFileTest" );
-	} catch ( FileNotFoundException e ) {
-		throw new RuntimeException( e );
-	}
-
-	List<Token> tokens;
-	try {
-		tokens = lx.lexAll();
-	} catch ( LexingException e ) {
-		System.out.println( e.getMessage() );
-		throw new AssertionError( String.format( "Failed to lex file %s: %s", file.getName(), e.getMessage() ) );
-	}
-	Logger.info( "Successfully lexed a basic file. Tokens:" );
-	StringJoiner j = new StringJoiner( ", " );
-	for ( Token t : tokens ) {
-		j.add( t.toString() );
-	}
-	Logger.info( j.toString() );
-	assertEquals( "Tilde, BracketSquOpen, BracketSquClose, Semicolon, ArrowThinLeft, IntegerLiteral(15), IntegerLiteral(5), IntegerLiteral(161), IntegerLiteral(10), IntegerLiteral(123), IntegerLiteral(123), IntegerLiteral(-123), IntegerLiteral(58), IntegerLiteral(254), IntegerLiteral(9), Label(label), Tilde, BracketSquOpen, IntegerLiteral(-14), BracketSquClose, ArrowThinLeft, ArrowThinLeft, ArrowThinLeft, BracketSquOpen, BracketSquOpen, BracketSquOpen, BracketSquClose, BracketSquClose, ArrowThinLeft, Label(exit)", j.toString() );
-
-}
-
 
 @Test
 public void testBinaryNoSign ()
@@ -163,7 +127,7 @@ private void checkNumeric ( int expected, String s )
 
 	Token t = null;
 	try {
-		t = new Lexer( s ).lexSingularToken();
+		t = new Lexer( s ).nextToken();
 	} catch ( LexingException e ) {
 		throw new RuntimeException( "Unable to parse \"%s\", %s".formatted( s, e ) );
 	}
@@ -221,7 +185,7 @@ private void assertType ( TokenType expected, String s )
 {
 	Token t;
 	try {
-		t = new Lexer( s ).lexSingularToken();
+		t = new Lexer( s ).nextToken();
 	} catch ( LexingException e ) {
 		throw new RuntimeException( "Unable to parse \"%s\", %s".formatted( s, e ) );
 	}
@@ -232,7 +196,7 @@ private void assertHasValue ( Object expected, String s )
 {
 	Token t;
 	try {
-		t = new Lexer( s ).lexSingularToken();
+		t = new Lexer( s ).nextToken();
 	} catch ( LexingException e ) {
 		throw new RuntimeException( "Unable to parse \"%s\", %s".formatted( s, e ) );
 	}
@@ -250,7 +214,7 @@ public void cantLexEmptyIntegerLiterals ()
 
 private void assertCantLex ( String invalid )
 {
-	assertThrows( LexingException.class, new Lexer( invalid )::lexSingularToken );
+	assertThrows( LexingException.class, new Lexer( invalid )::nextToken );
 }
 
 
