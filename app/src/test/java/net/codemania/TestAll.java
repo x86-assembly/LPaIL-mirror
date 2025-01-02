@@ -11,7 +11,7 @@ public class TestAll
 @Test
 public void testexample ()
 {
-	String program = "~[irLXIX]->.exit;";
+	String program = "~[irXLII]->.exit;";
 	Logger.info( "Compiling program `%s`:".formatted( program ) );
 	String prog = "\n";
 	try {
