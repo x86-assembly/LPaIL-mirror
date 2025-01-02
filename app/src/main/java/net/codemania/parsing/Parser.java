@@ -1,13 +1,13 @@
 package net.codemania.parsing;
 
 import net.codemania.TokenStream;
+import net.codemania.ast.concrete.NodeASTRoot;
+import net.codemania.ast.concrete.NodeProcedureInvocation;
+import net.codemania.ast.concrete.expression.NodeExpressionLiteralInteger;
+import net.codemania.ast.node_types.ASTNodeExpression;
 import net.codemania.lexing.Token;
 import net.codemania.lexing.TokenType;
 import net.codemania.lexing.exceptions.LexingException;
-import net.codemania.parsing.ast.NodeASTRoot;
-import net.codemania.parsing.ast.NodeProcedureInvocation;
-import net.codemania.parsing.ast.abstracts.NodeExpression;
-import net.codemania.parsing.ast.expression.NodeExpressionLiteralInteger;
 import net.codemania.parsing.exceptions.ParserUnexpectedSymbolException;
 import net.codemania.parsing.exceptions.ParsingException;
 
@@ -45,15 +45,16 @@ private NodeProcedureInvocation parseProcedureInvocation () throws LexingExcepti
 	// for now brackets are Required
 	consume( TokenType.BracketSquOpen );
 
-	List<NodeExpression> args = new ArrayList<>();
-	args.add( new NodeExpressionLiteralInteger( (int) consume( TokenType.IntegerLiteral ).getVal() ) );
+	List<ASTNodeExpression> args = new ArrayList<>();
+	Token argument = consume( TokenType.IntegerLiteral );
+	args.add( new NodeExpressionLiteralInteger( (int) argument.getVal(), argument.getPos() ) );
 
 	consume( TokenType.BracketSquClose );
 	consume( TokenType.ArrowThinLeft );
-	String name = (String) consume( TokenType.Label ).getVal();
+	Token label = consume( TokenType.Label );
 	consume( TokenType.Semicolon );
 
-	return new NodeProcedureInvocation( name, args );
+	return new NodeProcedureInvocation( (String) label.getVal(), args, label.getPos() );
 }
 
 private Token current;

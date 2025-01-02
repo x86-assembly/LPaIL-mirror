@@ -4,26 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/TokenStream.java" afterDir="false" />
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="added rudimentary parsing">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeGeneric.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationProcedureArgumentException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationProcedureArgumentTooManyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedRefferenceException.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeASTRoot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeProcedureInvocation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeBlankInternal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/expression/NodeExpressionLiteralInteger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTInternalNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTLeafNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/exceptions/ParserUnexpectedSymbolException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/exceptions/ParsingException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnexpectedCharacterException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeASTRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeASTRoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeProcedureInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeProcedureInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeBlankInternal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/expression/NodeExpressionLiteralInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralInteger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTInternalNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTLeafNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +97,7 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
+        <option value="Exception" />
         <option value="Class" />
       </list>
     </option>
@@ -120,33 +123,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build LPaIL.executor": "Run",
-    "Gradle.LPaIL:app [build].executor": "Run",
-    "Gradle.LPaIL:app [clean].executor": "Run",
-    "Gradle.LPaIL:app [run].executor": "Run",
-    "Gradle.LPaIL:app [test].executor": "Run",
-    "Gradle.LexerTest.canLexNumber.executor": "Debug",
-    "Gradle.LexerTest.executor": "Run",
-    "OverrideImplement.generate.javadoc": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build LPaIL.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.LPaIL:app [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.LPaIL:app [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.LPaIL:app [run].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.LPaIL:app [test].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.LexerTest.canLexNumber.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.LexerTest.executor&quot;: &quot;Run&quot;,
+    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/test/resources" />
@@ -302,7 +305,8 @@
       <workItem from="1735504656541" duration="9920000" />
       <workItem from="1735565166394" duration="11217000" />
       <workItem from="1735588201611" duration="22443000" />
-      <workItem from="1735657514483" duration="22052000" />
+      <workItem from="1735657514483" duration="22245000" />
+      <workItem from="1735751657685" duration="11487000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />
@@ -336,7 +340,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735604419176</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added rudimentary parsing">
+      <option name="closed" value="true" />
+      <created>1735699677322</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1735699677322</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,7 +369,8 @@
     <MESSAGE value="started with lexer(doesn't work yet)." />
     <MESSAGE value="Lexer now supports roman numerals!" />
     <MESSAGE value="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF" />
+    <MESSAGE value="added rudimentary parsing" />
+    <option name="LAST_COMMIT_MESSAGE" value="added rudimentary parsing" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
