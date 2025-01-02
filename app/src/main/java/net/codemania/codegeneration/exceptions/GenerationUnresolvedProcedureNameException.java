@@ -2,7 +2,7 @@ package net.codemania.codegeneration.exceptions;
 
 import net.codemania.FilePosition;
 
-public class GenerationUnresolvedProcedureNameException extends GenerationUnresolvedRefferenceException
+public class GenerationUnresolvedProcedureNameException extends GenerationUnresolvedReferenceException
 {
 public GenerationUnresolvedProcedureNameException ( String procName, FilePosition pos )
 {

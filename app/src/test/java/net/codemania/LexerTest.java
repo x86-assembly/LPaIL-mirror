@@ -125,7 +125,7 @@ public void testRomanMinus ()
 private void checkNumeric ( int expected, String s )
 {
 
-	Token t = null;
+	Token t;
 	try {
 		t = new Lexer( s ).nextToken();
 	} catch ( LexingException e ) {

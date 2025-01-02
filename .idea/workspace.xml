@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="added rudimentary parsing">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeGeneric.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationProcedureArgumentException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationProcedureArgumentTooManyException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedRefferenceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Code generation">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedRefferenceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedReferenceException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeASTRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeASTRoot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/NodeProcedureInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeProcedureInvocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeBlankInternal.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/abstracts/NodeExpression.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/expression/NodeExpressionLiteralInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralInteger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTInternalNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTLeafNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/ast/types/ASTNode.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +298,7 @@
       <workItem from="1735565166394" duration="11217000" />
       <workItem from="1735588201611" duration="22443000" />
       <workItem from="1735657514483" duration="22245000" />
-      <workItem from="1735751657685" duration="11487000" />
+      <workItem from="1735751657685" duration="12058000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />
@@ -348,7 +340,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735699677322</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Code generation">
+      <option name="closed" value="true" />
+      <created>1735784384489</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1735784384489</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -370,7 +370,8 @@
     <MESSAGE value="Lexer now supports roman numerals!" />
     <MESSAGE value="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF" />
     <MESSAGE value="added rudimentary parsing" />
-    <option name="LAST_COMMIT_MESSAGE" value="added rudimentary parsing" />
+    <MESSAGE value="Code generation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code generation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

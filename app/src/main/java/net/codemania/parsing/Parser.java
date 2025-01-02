@@ -17,7 +17,7 @@ import java.util.List;
 public class Parser
 {
 
-private TokenStream tokenStream;
+private final TokenStream tokenStream;
 
 public Parser ( TokenStream stream )
 {

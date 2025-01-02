@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 public class Lexer implements TokenStream
 {
 
-private BufferedReader reader;
-private String name;
+private final BufferedReader reader;
+private final String name;
 
 public Lexer ( String unbuffered )
 {

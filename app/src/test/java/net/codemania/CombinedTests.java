@@ -16,9 +16,7 @@ public void lexAndParseSimpleProcedureInvocation ()
 	ASTNodeGeneric n;
 	try {
 		n = new Parser( new Lexer( "~[irIM]->.exit;" ) ).parse();
-	} catch ( LexingException e ) {
-		throw new RuntimeException( e );
-	} catch ( ParsingException e ) {
+	} catch ( LexingException | ParsingException e ) {
 		throw new RuntimeException( e );
 	}
 	System.out.println( n );

@@ -62,18 +62,21 @@ public String visit ( NodeProcedureInvocation node ) throws GenerationException
 	// so we now pop them off, and into their respective registers
 	for ( int i = 0; i < args.size(); i++ ) {
 		String[] registers = { "rdi", "rsi", "rdx", "r10", "r8", "r9" };
-		sb.append( "\n\tpop " + registers[args.size() - 1 - i] );
+		sb.append( "\n\tpop " ).append( registers[args.size() - 1 - i] );
 		// `args.size() -1`
 		// since the args are in reverse order, we need to put the first
 		// arg into the last of the used registers, and the last into
 		// the first register
 	}
 	// args should now be properly loaded into rdi-r9
-	sb.append( "\n\tmov rax, " + Syscalls.SYS_EXIT.call_no );
+	sb.append( "\n\tmov rax, " ).append( Syscalls.SYS_EXIT.call_no );
 	sb.append( "\n\tsyscall" );
 	return sb.toString();
 }
 
+/**
+ *
+ */
 private enum Syscalls
 {
 	SYS_EXIT( 60 ),
