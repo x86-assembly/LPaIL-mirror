@@ -1,7 +1,6 @@
 package net.codemania.lexing;
 
 import net.codemania.FilePosition;
-import net.codemania.cli.Logger;
 
 import java.util.Objects;
 
@@ -16,6 +15,7 @@ public Token ( TokenType type, Object value, FilePosition pos )
 {
 	this.type = type;
 	this.val = value;
+	this.pos = pos;
 }
 
 public Token ( TokenType type, FilePosition pos )
@@ -75,7 +75,6 @@ public boolean equals ( Object o )
 {
 	if ( o == null || getClass() != o.getClass() ) return false;
 	Token token = (Token) o;
-	Logger.info( val + "," + token.val );
 	return type == token.type && Objects.equals( val, token.val );
 }
 }

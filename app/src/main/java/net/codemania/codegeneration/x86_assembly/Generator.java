@@ -1,90 +1,86 @@
 package net.codemania.codegeneration.x86_assembly;
 
 import net.codemania.ast.concrete.NodeASTRoot;
-import net.codemania.ast.concrete.NodeProcedureInvocation;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralInteger;
-import net.codemania.ast.node_types.ASTNodeExpression;
-import net.codemania.ast.node_types.ASTNodeGeneric;
+import net.codemania.ast.concrete.expression.NodeExpressionLiteralString;
+import net.codemania.ast.concrete.procedure.NodeProcedureDeclaration;
+import net.codemania.ast.concrete.procedure.NodeProcedureDeclarationDefinition;
+import net.codemania.ast.concrete.procedure.NodeProcedureInvocation;
+import net.codemania.ast.node_types.INode;
+import net.codemania.ast.node_types.INodeExpression;
 import net.codemania.codegeneration.NodeVisitor;
 import net.codemania.codegeneration.exceptions.GenerationException;
-import net.codemania.codegeneration.exceptions.GenerationProcedureArgumentTooManyException;
 import net.codemania.codegeneration.exceptions.GenerationUnresolvedProcedureNameException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringJoiner;
 
 public class Generator implements NodeVisitor
 {
 
+private int labelCounter = 0;
+private StringJoiner dataSegment = new StringJoiner( "\n" ).add( "segment .data" );
+private StringJoiner bssSegment = new StringJoiner( "\n" ).add( "segment .bss" );
+private StringJoiner textSegment = new StringJoiner( "\n" ).add( "segment .text" );
+private Set<String> knownSymbols = new HashSet<>();
+private Set<String> definedSymbols = new HashSet<>();
+
 public String generateRootNode ( NodeASTRoot node )
 {
-	StringBuilder sb = new StringBuilder( "global _start\n" );
-	sb.append( "_start:\n" );
+	StringJoiner finalProgram = new StringJoiner( "\n" );
+	StringBuilder sb = new StringBuilder( "global main\n" );
+	sb.append( "main:\n" );
+	sb.append( "\tpush rbp\n" );
 
-	for ( ASTNodeGeneric child : node.children() ) {
+	for ( INode child : node.children() ) {
 		try {sb.append( child.accept( this ) );} catch ( GenerationException e ) {
 			throw new RuntimeException( e );
 		}
 	}
+	textSegment.add( sb );
+	textSegment.add( "\tpop rbp" );
+	textSegment.add( "\tret" );
 
-	return sb.toString();
+	for ( String symbol : knownSymbols ) {
+		if ( !definedSymbols.contains( symbol ) ) {
+			finalProgram.add( "extern " + symbol );
+		}
+	}
+
+	finalProgram.merge( dataSegment );
+	finalProgram.merge( bssSegment );
+
+	finalProgram.merge( textSegment );
+	return finalProgram.toString();
 
 }
 
 @Override
 public String visit ( NodeProcedureInvocation node ) throws GenerationException
 {
-	StringBuilder sb = new StringBuilder();
-	String invokedName = node.procedureName();
-	// for now the only available procedure is "exit"
-	if ( !invokedName.equals( "exit" ) ) {
-		throw new GenerationUnresolvedProcedureNameException( invokedName, node.position() );
-	}
-	// linux syscall registers
-	/*
-	 * 1: RDI
-	 * 2: RSI
-	 * 3: RDX
-	 * 4: R10
-	 * 5: R8
-	 * 6: R9
-	 */
-	List<ASTNodeExpression> args = node.args();
-	if ( args.size() > 6 ) {
-		throw new GenerationProcedureArgumentTooManyException( invokedName, args.size(), 6, node.position() );
+	String name = node.procedureName();
+	if ( !knownSymbols.contains( name ) ) {
+		throw new GenerationUnresolvedProcedureNameException( name, node.position() );
 	}
 
-	for ( ASTNodeExpression arg : args ) {
-		// should put it in rax
-		sb.append( arg.accept( this ) );
-		sb.append( "\n\tpush rax" );
+	StringJoiner sj = new StringJoiner( "\n" );
+	List<INodeExpression> args = node.args();
+	for ( INodeExpression arg : args.reversed() ) {
+		// put expression value into rax
+		sj.add( arg.accept( this ) );
+		sj.add( "\tpush rax" );
 	}
-	// all args are now on stack
-	// so we now pop them off, and into their respective registers
-	for ( int i = 0; i < args.size(); i++ ) {
-		String[] registers = { "rdi", "rsi", "rdx", "r10", "r8", "r9" };
-		sb.append( "\n\tpop " ).append( registers[args.size() - 1 - i] );
-		// `args.size() -1`
-		// since the args are in reverse order, we need to put the first
-		// arg into the last of the used registers, and the last into
-		// the first register
+
+	String regs[] = new String[] { "rdi", "rsi", "rdx", "rcx", "r8", "r9" };
+	for ( int i = 0; i < Math.min( args.size(), 6 ); i++ ) {
+		sj.add( "\tpop " + regs[i] );
 	}
-	// args should now be properly loaded into rdi-r9
-	sb.append( "\n\tmov rax, " ).append( Syscalls.SYS_EXIT.call_no );
-	sb.append( "\n\tsyscall" );
-	return sb.toString();
-}
+	sj.add( "\tmov eax, 0" ); // idk why but c does it
+	sj.add( "\tcall " + name );
+	return sj.toString();
 
-/**
- *
- */
-private enum Syscalls
-{
-	SYS_EXIT( 60 ),
-	;
-
-	public final int call_no;
-
-	Syscalls ( int n ) {this.call_no = n;}
 }
 
 
@@ -105,4 +101,47 @@ public String visit ( NodeExpressionLiteralInteger node )
 {
 	return "\n\tmov rax, " + node.value();
 }
+
+@Override
+public String visit ( NodeExpressionLiteralString node )
+{
+	String label = "lc" + ( labelCounter++ );
+	StringBuilder sb = new StringBuilder( "\t%s db ".formatted( label ) );
+	boolean mode = false; // is currently a string
+	for ( char c : node.value().toCharArray() ) {
+		if ( c < ' ' || c > '~' ) // non ascii printable
+		{
+			if ( mode ) {
+				sb.append( "\", " );
+				mode = false;
+			}
+			sb.append( (int) c );
+			sb.append( ", " );
+		} else {
+			if ( !mode ) {
+				sb.append( '"' );
+				mode = true;
+			}
+			sb.append( c );
+		}
+	}
+	if ( mode ) sb.append( "\"" );
+	dataSegment.add( sb );
+
+	return "\n\tmov rax, " + label;
+}
+
+@Override
+public String visit ( NodeProcedureDeclaration node )
+{
+	knownSymbols.add( node.label() );
+	return "";
+}
+
+@Override
+public String visit ( NodeProcedureDeclarationDefinition node )
+{
+	return "";
+}
+
 }

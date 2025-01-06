@@ -1,6 +1,6 @@
 package net.codemania;
 
-import net.codemania.ast.node_types.ASTNodeGeneric;
+import net.codemania.ast.node_types.INode;
 import net.codemania.lexing.Lexer;
 import net.codemania.lexing.exceptions.LexingException;
 import net.codemania.parsing.Parser;
@@ -13,7 +13,7 @@ public class CombinedTests
 @Test
 public void lexAndParseSimpleProcedureInvocation ()
 {
-	ASTNodeGeneric n;
+	INode n;
 	try {
 		n = new Parser( new Lexer( "~[irIM]->.exit;" ) ).parse();
 	} catch ( LexingException | ParsingException e ) {

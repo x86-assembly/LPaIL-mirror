@@ -8,16 +8,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Code generation">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralString.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDeclaration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDeclarationDefinition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeProcedure.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerStringMalformedEscapeSequenceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnknownKeywordException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/exceptions/ParserNoStatementException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeASTRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeASTRoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeProcedureInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralInteger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeGeneric.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedRefferenceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedReferenceException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/LexerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,8 +101,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Exception" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -107,7 +120,7 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
+  &quot;customColor&quot;: &quot;f03535ff&quot;,
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2qrdqUchV4TbGlUY1YvV5nXmnLx" />
@@ -124,7 +137,6 @@
     &quot;Gradle.LPaIL:app [test].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.LexerTest.canLexNumber.executor&quot;: &quot;Debug&quot;,
     &quot;Gradle.LexerTest.executor&quot;: &quot;Run&quot;,
-    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
@@ -151,7 +163,7 @@
       <recent name="$PROJECT_DIR$/app/src/examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LexerTest">
+  <component name="RunManager" selected="Gradle.LPaIL:app [test]">
     <configuration name="LPaIL:app [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -268,8 +280,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.LexerTest" />
         <item itemvalue="Gradle.LPaIL:app [test]" />
+        <item itemvalue="Gradle.LexerTest" />
         <item itemvalue="Gradle.LexerTest.canLexNumber" />
         <item itemvalue="Gradle.LPaIL:app [build]" />
         <item itemvalue="Gradle.LPaIL:app [clean]" />
@@ -299,6 +311,15 @@
       <workItem from="1735588201611" duration="22443000" />
       <workItem from="1735657514483" duration="22245000" />
       <workItem from="1735751657685" duration="12058000" />
+      <workItem from="1735824992606" duration="4772000" />
+      <workItem from="1735849033214" duration="14354000" />
+      <workItem from="1736001805136" duration="13043000" />
+      <workItem from="1736019859546" duration="4350000" />
+      <workItem from="1736103217535" duration="24240000" />
+      <workItem from="1736165529063" duration="6000" />
+      <workItem from="1736171151464" duration="5086000" />
+      <workItem from="1736184202396" duration="6534000" />
+      <workItem from="1736192838098" duration="492000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />

@@ -8,8 +8,15 @@ public enum TokenType
 	IntegerLiteral,
 	ArrowThinLeft,
 	ArrowThickLeft,
-	Identifier, // uppercase
 	Label, // lowercase, usually procedure or variable names
 	Semicolon,
+	Colon,
+	Comma,
+	String,
+	// Keywords
+	KwProcedure,
+
+	//
+	EOF,
 
 }
