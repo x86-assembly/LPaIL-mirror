@@ -6,8 +6,8 @@ public enum TokenType
 	BracketSquOpen,
 	BracketSquClose,
 	IntegerLiteral,
-	ArrowThinLeft,
-	ArrowThickLeft,
+	ArrowThinRight,
+	ArrowThickRight,
 	Label, // lowercase, usually procedure or variable names
 	Semicolon,
 	Colon,

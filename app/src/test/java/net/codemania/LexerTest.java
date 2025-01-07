@@ -163,7 +163,7 @@ public void testIntegerLiteral ()
 @Test
 public void testArrowThinLeft ()
 {
-	assertType( TokenType.ArrowThinLeft, "->" );
+	assertType( TokenType.ArrowThinRight, "->" );
 }
 
 @Test

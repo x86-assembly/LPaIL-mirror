@@ -178,7 +178,7 @@ private Token lexMinus () throws LexerUnexpectedCharacterException
 {
 	// save position so the tokens position will point to the start,
 	// and not the end
-	Token t = new Token( TokenType.ArrowThinLeft, pos() );
+	Token t = new Token( TokenType.ArrowThinRight, pos() );
 	consume( "->" );
 	//Todo for now only '->' possible, but things like arithmetic binary minus
 	// will change that

@@ -72,7 +72,7 @@ private NodeProcedureInvocation parseProcedureInvocation () throws LexingExcepti
 		}
 	}
 	consume( TokenType.BracketSquClose );
-	consume( TokenType.ArrowThinLeft );
+	consume( TokenType.ArrowThinRight );
 	Token label = consume( TokenType.Label );
 	consume( TokenType.Semicolon );
 
