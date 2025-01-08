@@ -3,9 +3,7 @@ package net.codemania.lexing;
 import net.codemania.FilePosition;
 import net.codemania.TokenStream;
 import net.codemania.cli.Logger;
-import net.codemania.lexing.exceptions.LexerMissingValueException;
-import net.codemania.lexing.exceptions.LexerUnexpectedCharacterException;
-import net.codemania.lexing.exceptions.LexingException;
+import net.codemania.lexing.exceptions.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,12 +27,13 @@ public Lexer ( String unbuffered, String name )
 {
 	this.reader = new BufferedReader( new StringReader( unbuffered ) );
 	if ( name == null ) {
-		this.name = unbuffered.substring( 0, Math.min( unbuffered.length(), 50 ) );
+		this.name = "<unbuffered-string>";
 	} else {this.name = name;}
 	if ( unbuffered.length() > 2048 ) {
 		Logger.warn( "Lexing large unbuffered file %s".formatted( this.name ) );
 	}
 	readNext(); // make sure that 'current' contains the first char
+
 }
 
 public Lexer ( BufferedReader reader, String name )
@@ -48,12 +47,10 @@ public Lexer ( BufferedReader reader, String name )
 public List<Token> lexAll () throws LexingException
 {
 
-	skipWhitespace();
 	List<Token> tokens = new LinkedList<>();
 
 	while ( current != (char) -1 ) {
 		tokens.add( nextToken() );
-		skipWhitespace();
 	}
 	return tokens;
 }
@@ -61,21 +58,31 @@ public List<Token> lexAll () throws LexingException
 @Override
 public Token nextToken () throws LexingException
 {
+	skipWhitespace();
 	if ( !hasMoreTokens() ) {
 		return null;
 	}
-	return switch ( current ) {
+	Token token = switch ( current ) {
 		case '~' -> lexSimpleToken( TokenType.Tilde );
 		case '[' -> lexSimpleToken( TokenType.BracketSquOpen );
 		case ']' -> lexSimpleToken( TokenType.BracketSquClose );
 		case ';' -> lexSimpleToken( TokenType.Semicolon );
+		case ',' -> lexSimpleToken( TokenType.Comma );
+		case ':' -> lexSimpleToken( TokenType.Colon );
 		// more complex tokens
 		case '-' -> lexMinus();
 		case 'i' -> lexIntegerLiteral();
 		case '.' -> lexLabel();
+		case '"' -> lexString();
+		default -> null;
 
-		default -> throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
 	};
+	if ( token != null ) return token;
+
+	if ( Character.isUpperCase( current ) ) return lexKeyword();
+
+
+	throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
 }
 
 
@@ -107,14 +114,14 @@ private char current;
 // column to zero, because first char has not been read yet
 private int line = 1, column = 0;
 
-private void readNext ()
+private char readNext ()
 {
 	// what was read
 	int read;
 	try {
 		read = reader.read();
 	} catch ( IOException e ) {
-		Logger.warn( "IOException while reading file! inserting EOF instead!" );
+		Logger.warn( "IOException while reading file! inserting EOF instead! (Tipp: try " + "using `hasMoreTokens()` )" );
 		read = -1;
 	}
 	this.current = (char) read;
@@ -122,6 +129,7 @@ private void readNext ()
 		line++;
 		column = 1;
 	} else {column++;}
+	return this.current;
 
 }
 
@@ -147,6 +155,7 @@ private FilePosition pos ()
 
 private int skipWhitespace ()
 {
+	if ( !hasMoreTokens() ) return 0;
 	int consumed = 0;
 	while ( Character.isWhitespace( current ) ) {
 		readNext();
@@ -169,7 +178,7 @@ private Token lexMinus () throws LexerUnexpectedCharacterException
 {
 	// save position so the tokens position will point to the start,
 	// and not the end
-	Token t = new Token( TokenType.ArrowThinLeft, pos() );
+	Token t = new Token( TokenType.ArrowThinRight, pos() );
 	consume( "->" );
 	//Todo for now only '->' possible, but things like arithmetic binary minus
 	// will change that
@@ -271,5 +280,98 @@ private Token lexLabel () throws LexerUnexpectedCharacterException
 		readNext();
 	}
 	return new Token( TokenType.Label, sb.toString(), tokenStart );
+}
+
+private Token lexString () throws LexingException
+{
+	FilePosition tokenStart = pos();
+	consume( '"' );
+	StringBuilder string = new StringBuilder();
+	while ( current != '\"' ) {
+		if ( current != '\\' ) {
+			string.append( current );
+			readNext();
+			continue;
+		}
+
+		readNext();
+		string.append( switch ( current ) {
+			case '\\' -> '\\';
+			case 'n' -> '\n';
+			case 'r' -> '\r';
+			case 't' -> '\t';
+			case 's' -> ' ';
+			case 'e' -> (char) 0x1b;
+			case '0' -> {
+				FilePosition escapeStart = pos();
+				int val;
+				String escape = "" + readNext() + readNext();
+				try {
+					val = Integer.parseInt( escape, 8 );
+					if ( val < 0 ) {throw new Exception();}
+				} catch ( Exception e ) {
+					throw new LexerStringMalformedEscapeSequenceException( escape, "Invalid octal character code", escapeStart );
+				}
+				yield (char) val;
+			}
+			case 'x' -> {
+				FilePosition escapeStart = pos();
+				int val;
+				String escape = "" + readNext() + readNext();
+				try {
+					val = Integer.parseInt( escape, 16 );
+					if ( val < 0 ) {throw new Exception();}
+				} catch ( Exception e ) {
+					throw new LexerStringMalformedEscapeSequenceException( escape, "Invalid hexadecimal character code", escapeStart );
+				}
+				yield (char) val;
+
+			}
+			default -> {
+				Logger.warn( "Unknown escape '\\%c' at %s, ignoring!".formatted( current, pos() ) );
+				yield current;
+			}
+		} );
+
+		readNext();
+	}
+	consume( '"' );
+
+	return new Token( TokenType.String, string.toString(), tokenStart );
+}
+
+private Token lexKeyword () throws LexingException
+{
+	StringBuilder sb = new StringBuilder();
+	FilePosition startPos = pos();
+	// current char should already be uppercase, else this method would not
+	// have been called
+	do {
+		sb.append( current );
+		readNext();
+	} while ( Character.isUpperCase( current ) );
+	String keyword = sb.toString();
+	TokenType type = switch ( keyword ) {
+		case "PROC" -> TokenType.KwProcedure;
+		case "END" -> TokenType.END;
+		default -> throw new LexerUnknownKeywordException( keyword, startPos );
+	};
+	Object val = null;
+	if ( type == TokenType.END ) {
+		FilePosition blockStart = pos();
+		// END needs to specif the block it ends like END-PROC
+		consume( '-' );
+		StringBuilder end = new StringBuilder();
+		while ( Character.isUpperCase( current ) ) {
+			end.append( current );
+			readNext();
+		}
+		val = switch ( end.toString() ) {
+			case "PROC" -> BlockType.PROCEDURE;
+			default ->
+				throw new LexerUnknownKeywordException( end.toString(), blockStart );
+		};
+	}
+	return new Token( type, val, startPos );
 }
 }

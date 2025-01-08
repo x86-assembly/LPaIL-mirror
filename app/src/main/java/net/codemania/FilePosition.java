@@ -13,7 +13,7 @@ public String toString ()
 		sb.append( "line " ).append( line );
 		sb.append( " column " ).append( col );
 	}
-
+	String filename = this.filename.strip().replace( "\n", "\\n" );
 	if ( filename != null ) sb.append( " in \"" ).append( filename ).append( '"' );
 	return sb.toString();
 }
