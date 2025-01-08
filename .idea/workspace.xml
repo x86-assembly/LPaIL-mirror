@@ -8,16 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Code generation">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/BlockType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDeclarationDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDefinition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
