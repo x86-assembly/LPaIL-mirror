@@ -8,28 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Code generation">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralString.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDeclaration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDeclarationDefinition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeProcedure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerStringMalformedEscapeSequenceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/exceptions/LexerUnknownKeywordException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/exceptions/ParserNoStatementException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/BlockType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeASTRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeASTRoot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/NodeProcedureInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureInvocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionLiteralInteger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/ASTNodeGeneric.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/FilePosition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDeclarationDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureDefinition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Token.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/CombinedTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,10 +87,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Exception" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -111,6 +98,11 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="OptimizeOnSaveOptions">
@@ -128,32 +120,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build LPaIL.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [run].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LexerTest.canLexNumber.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.LexerTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build LPaIL.executor": "Run",
+    "Gradle.LPaIL:app [build].executor": "Run",
+    "Gradle.LPaIL:app [clean].executor": "Run",
+    "Gradle.LPaIL:app [run].executor": "Run",
+    "Gradle.LPaIL:app [test].executor": "Run",
+    "Gradle.LexerTest.canLexNumber.executor": "Debug",
+    "Gradle.LexerTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/test/resources" />

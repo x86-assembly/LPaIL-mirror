@@ -4,10 +4,11 @@ import net.codemania.ast.concrete.NodeASTRoot;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralInteger;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralString;
 import net.codemania.ast.concrete.procedure.NodeProcedureDeclaration;
-import net.codemania.ast.concrete.procedure.NodeProcedureDeclarationDefinition;
+import net.codemania.ast.concrete.procedure.NodeProcedureDefinition;
 import net.codemania.ast.concrete.procedure.NodeProcedureInvocation;
 import net.codemania.ast.node_types.INode;
 import net.codemania.ast.node_types.INodeExpression;
+import net.codemania.ast.node_types.INodeStatement;
 import net.codemania.codegeneration.NodeVisitor;
 import net.codemania.codegeneration.exceptions.GenerationException;
 import net.codemania.codegeneration.exceptions.GenerationUnresolvedProcedureNameException;
@@ -31,8 +32,6 @@ public String generateRootNode ( NodeASTRoot node )
 {
 	StringJoiner finalProgram = new StringJoiner( "\n" );
 	StringBuilder sb = new StringBuilder( "global main\n" );
-	sb.append( "main:\n" );
-	sb.append( "\tpush rbp\n" );
 
 	for ( INode child : node.children() ) {
 		try {sb.append( child.accept( this ) );} catch ( GenerationException e ) {
@@ -40,8 +39,6 @@ public String generateRootNode ( NodeASTRoot node )
 		}
 	}
 	textSegment.add( sb );
-	textSegment.add( "\tpop rbp" );
-	textSegment.add( "\tret" );
 
 	for ( String symbol : knownSymbols ) {
 		if ( !definedSymbols.contains( symbol ) ) {
@@ -85,6 +82,28 @@ public String visit ( NodeProcedureInvocation node ) throws GenerationException
 
 
 @Override
+public String visit ( NodeProcedureDeclaration node )
+{
+	knownSymbols.add( node.label() );
+	return "";
+}
+
+@Override
+public String visit ( NodeProcedureDefinition node ) throws GenerationException
+{
+	StringJoiner sj = new StringJoiner( "\n" );
+	sj.add( node.label() + ":" );
+	sj.add( "\tpush rsp" );
+	for ( INodeStatement stmt : node.statements() ) {
+		sj.add( stmt.accept( this ) );
+	}
+	sj.add( "\tmov rax, 0" );
+	sj.add( "\tpop rbp" );
+	sj.add( "\tret" );
+	return sj.toString();
+}
+
+@Override
 public String visit ( NodeASTRoot node )
 {
 	return "";
@@ -108,7 +127,8 @@ public String visit ( NodeExpressionLiteralString node )
 	String label = "lc" + ( labelCounter++ );
 	StringBuilder sb = new StringBuilder( "\t%s db ".formatted( label ) );
 	boolean mode = false; // is currently a string
-	for ( char c : node.value().toCharArray() ) {
+	String string = node.value() + '\0';
+	for ( char c : string.toCharArray() ) {
 		if ( c < ' ' || c > '~' ) // non ascii printable
 		{
 			if ( mode ) {
@@ -129,19 +149,6 @@ public String visit ( NodeExpressionLiteralString node )
 	dataSegment.add( sb );
 
 	return "\n\tmov rax, " + label;
-}
-
-@Override
-public String visit ( NodeProcedureDeclaration node )
-{
-	knownSymbols.add( node.label() );
-	return "";
-}
-
-@Override
-public String visit ( NodeProcedureDeclarationDefinition node )
-{
-	return "";
 }
 
 }

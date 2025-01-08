@@ -16,7 +16,13 @@ public enum TokenType
 	// Keywords
 	KwProcedure,
 
-	//
+	// ENDS
+	/*
+	 * End of any block like procedures or if statements
+	 * Has the type of statement it ends as it's value
+	 */
+	END,
+
 	EOF,
 
 }

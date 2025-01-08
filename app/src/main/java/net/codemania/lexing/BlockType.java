@@ -1,4 +1,6 @@
 package net.codemania.lexing;
 
-public enum BlockType {
+public enum BlockType
+{
+	PROCEDURE
 }

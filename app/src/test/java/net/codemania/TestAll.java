@@ -17,8 +17,12 @@ public void testexample () throws LexingException, ParsingException
 
 	String program = """
 		PROC .printf;
-		~["Hello, World!"]->.printf;
+		PROC .main:
+			~["Hello, World!\\n"]->.printf;
+		END-PROC;
 		""";
+	Logger.info( new Parser( new Lexer( program ) ).parse() );
+	Logger.info( "--------" );
 	Logger.info( "Compiling program\n```\n%s\n```".formatted( program ) );
 	Logger.info( "\n" + new Generator().generateRootNode( new Parser( new Lexer( program ) ).parse() ) );
 }

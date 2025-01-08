@@ -7,8 +7,8 @@ import net.codemania.codegeneration.exceptions.GenerationException;
 
 import java.util.List;
 
-public record NodeProcedureDeclarationDefinition( String label,
-						  List<INodeStatement> statements ) implements INodeProcedure
+public record NodeProcedureDefinition( String label,
+				       List<INodeStatement> statements ) implements INodeProcedure
 {
 
 @Override

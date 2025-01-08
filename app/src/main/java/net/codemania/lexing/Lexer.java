@@ -27,7 +27,7 @@ public Lexer ( String unbuffered, String name )
 {
 	this.reader = new BufferedReader( new StringReader( unbuffered ) );
 	if ( name == null ) {
-		this.name = unbuffered.substring( 0, Math.min( unbuffered.length(), 50 ) );
+		this.name = "<unbuffered-string>";
 	} else {this.name = name;}
 	if ( unbuffered.length() > 2048 ) {
 		Logger.warn( "Lexing large unbuffered file %s".formatted( this.name ) );
@@ -336,7 +336,6 @@ private Token lexString () throws LexingException
 		readNext();
 	}
 	consume( '"' );
-	string.append( '\0' ); // null terminate strings for C
 
 	return new Token( TokenType.String, string.toString(), tokenStart );
 }
@@ -354,8 +353,25 @@ private Token lexKeyword () throws LexingException
 	String keyword = sb.toString();
 	TokenType type = switch ( keyword ) {
 		case "PROC" -> TokenType.KwProcedure;
+		case "END" -> TokenType.END;
 		default -> throw new LexerUnknownKeywordException( keyword, startPos );
 	};
-	return new Token( type, startPos );
+	Object val = null;
+	if ( type == TokenType.END ) {
+		FilePosition blockStart = pos();
+		// END needs to specif the block it ends like END-PROC
+		consume( '-' );
+		StringBuilder end = new StringBuilder();
+		while ( Character.isUpperCase( current ) ) {
+			end.append( current );
+			readNext();
+		}
+		val = switch ( end.toString() ) {
+			case "PROC" -> BlockType.PROCEDURE;
+			default ->
+				throw new LexerUnknownKeywordException( end.toString(), blockStart );
+		};
+	}
+	return new Token( type, val, startPos );
 }
 }
