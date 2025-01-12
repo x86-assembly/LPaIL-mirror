@@ -13,7 +13,7 @@ Eventually there will be just a single jar that can be used, but for now:
 
 ### Running
 
-The compiler generates x86_64 nasm assembly.
+The compiler generates x86\_64 nasm assembly.
 You can assemble and link it using `nasm -felf64 <yourfile> -o a.o && gcc ./a.o -no-pie -o a.out`
 
 ## Examples

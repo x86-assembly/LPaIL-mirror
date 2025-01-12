@@ -7,10 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Added code examples in README.md">
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Added support for comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,7 +310,7 @@
       <workItem from="1736530305936" duration="9000" />
       <workItem from="1736530320282" duration="2000" />
       <workItem from="1736617808745" duration="13688000" />
-      <workItem from="1736696647500" duration="10950000" />
+      <workItem from="1736696647500" duration="11770000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />
@@ -378,7 +376,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736704521534</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added support for comments">
+      <option name="closed" value="true" />
+      <created>1736709750075</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1736709750075</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +409,8 @@
     <MESSAGE value="Code generation" />
     <MESSAGE value="added variables and procedure return values" />
     <MESSAGE value="Added code examples in README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added code examples in README.md" />
+    <MESSAGE value="Added support for comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added support for comments" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
