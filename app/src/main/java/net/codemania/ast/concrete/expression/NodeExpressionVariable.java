@@ -1,16 +1,13 @@
-package net.codemania.ast.concrete.procedure;
+package net.codemania.ast.concrete.expression;
 
 import net.codemania.FilePosition;
 import net.codemania.ast.node_types.INodeExpression;
-import net.codemania.ast.node_types.INodeStatement;
 import net.codemania.codegeneration.NodeVisitor;
 import net.codemania.codegeneration.exceptions.GenerationException;
 
-import java.util.List;
-
-public record NodeProcedureInvocation( String procedureName, List<INodeExpression> args,
-				       FilePosition position ) implements INodeStatement
+public record NodeExpressionVariable( String name, FilePosition pos ) implements INodeExpression
 {
+
 @Override
 public String accept ( NodeVisitor visitor ) throws GenerationException
 {

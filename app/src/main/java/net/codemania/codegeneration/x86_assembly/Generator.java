@@ -3,20 +3,21 @@ package net.codemania.codegeneration.x86_assembly;
 import net.codemania.ast.concrete.NodeASTRoot;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralInteger;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralString;
+import net.codemania.ast.concrete.expression.NodeExpressionVariable;
 import net.codemania.ast.concrete.procedure.NodeProcedureDeclaration;
 import net.codemania.ast.concrete.procedure.NodeProcedureDefinition;
-import net.codemania.ast.concrete.procedure.NodeProcedureInvocation;
+import net.codemania.ast.concrete.statements.NodeProcedureInvocation;
+import net.codemania.ast.concrete.statements.NodeVariableAssignment;
+import net.codemania.ast.concrete.statements.NodeVariableDeclaration;
 import net.codemania.ast.node_types.INode;
 import net.codemania.ast.node_types.INodeExpression;
 import net.codemania.ast.node_types.INodeStatement;
 import net.codemania.codegeneration.NodeVisitor;
 import net.codemania.codegeneration.exceptions.GenerationException;
 import net.codemania.codegeneration.exceptions.GenerationUnresolvedProcedureNameException;
+import net.codemania.codegeneration.exceptions.GenerationUnresolvedVariableNameException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class Generator implements NodeVisitor
 {
@@ -27,18 +28,30 @@ private StringJoiner bssSegment = new StringJoiner( "\n" ).add( "segment .bss" )
 private StringJoiner textSegment = new StringJoiner( "\n" ).add( "segment .text" );
 private Set<String> knownSymbols = new HashSet<>();
 private Set<String> definedSymbols = new HashSet<>();
+private Context ctx;
+
+public Generator ()
+{
+	this( new Context( new HashMap<>(), 0 ) );
+}
+
+public Generator ( Context context )
+{
+	this.ctx = context;
+}
 
 public String generateRootNode ( NodeASTRoot node )
 {
 	StringJoiner finalProgram = new StringJoiner( "\n" );
-	StringBuilder sb = new StringBuilder( "global main\n" );
+	StringJoiner sj = new StringJoiner( "\n" );
+	sj.add( "global main" );
 
 	for ( INode child : node.children() ) {
-		try {sb.append( child.accept( this ) );} catch ( GenerationException e ) {
+		try {sj.add( child.accept( this ) );} catch ( GenerationException e ) {
 			throw new RuntimeException( e );
 		}
 	}
-	textSegment.add( sb );
+	textSegment.merge( sj );
 
 	for ( String symbol : knownSymbols ) {
 		if ( !definedSymbols.contains( symbol ) ) {
@@ -74,12 +87,19 @@ public String visit ( NodeProcedureInvocation node ) throws GenerationException
 	for ( int i = 0; i < Math.min( args.size(), 6 ); i++ ) {
 		sj.add( "\tpop " + regs[i] );
 	}
-	sj.add( "\tmov eax, 0" ); // idk why but c does it
+	sj.add( "\tmov eax, 0" ); // something with floats?
 	sj.add( "\tcall " + name );
+	if ( node.returnVar() != null ) {
+		String returnName = node.returnVar();
+		int offset;
+		if ( ctx.variables.containsKey( returnName ) ) {
+			offset = ctx.variables.get( returnName );
+		} else {offset = newVariable( returnName );}
+		sj.add( "\tmov QWORD [rbp-%d], rax\t; return into $%s".formatted( offset, returnName ) );
+	}
 	return sj.toString();
 
 }
-
 
 @Override
 public String visit ( NodeProcedureDeclaration node )
@@ -88,17 +108,52 @@ public String visit ( NodeProcedureDeclaration node )
 	return "";
 }
 
+private int newVariable ( String name )
+{
+	// why do all records have to be final??
+	this.ctx = new Context( ctx.variables, ctx.stackSize + 8 );
+	ctx.variables.put( name, ctx.stackSize );
+	return ctx.stackSize;
+}
+
+@Override
+public String visit ( NodeVariableDeclaration node )
+{
+	newVariable( node.name() );
+	return "";
+}
+
+@Override
+public String visit ( NodeVariableAssignment node ) throws GenerationException
+{
+	StringJoiner sj = new StringJoiner( "\n" );
+	sj.add( node.value().accept( this ) );
+	sj.add( "\tmov QWORD [rbp-%d], rax".formatted( newVariable( node.name() ) ) );
+
+	return sj.toString();
+}
+
 @Override
 public String visit ( NodeProcedureDefinition node ) throws GenerationException
 {
+	knownSymbols.add( node.label() );
+	definedSymbols.add( node.label() );
+	StringJoiner statements = new StringJoiner( "\n" );
+	this.ctx = new Context( new HashMap<>(), 0 );
+	for ( INodeStatement stmt : node.statements() ) {
+		statements.add( stmt.accept( this ) );
+	}
 	StringJoiner sj = new StringJoiner( "\n" );
 	sj.add( node.label() + ":" );
 	sj.add( "\tpush rsp" );
-	for ( INodeStatement stmt : node.statements() ) {
-		sj.add( stmt.accept( this ) );
-	}
-	sj.add( "\tmov rax, 0" );
+	sj.add( "\tmov rbp, rsp" );
+	int stackSize = ctx.stackSize;
+	// 16 byte align the stack to support c function calls
+	sj.add( "\tsub rsp, " + ( stackSize + 16 - ( stackSize % 16 ) ) );
+	sj.merge( statements );
+	sj.add( "\n\tmov rsp, rbp" );
 	sj.add( "\tpop rbp" );
+	sj.add( "\tmov rax, 0" );
 	sj.add( "\tret" );
 	return sj.toString();
 }
@@ -149,6 +204,24 @@ public String visit ( NodeExpressionLiteralString node )
 	dataSegment.add( sb );
 
 	return "\n\tmov rax, " + label;
+}
+
+@Override
+public String visit ( NodeExpressionVariable node ) throws GenerationException
+{
+	if ( !this.ctx.variables.containsKey( node.name() ) ) {
+		throw new GenerationUnresolvedVariableNameException( node.name(), node.pos() );
+	}
+	String placeholder = "\tmov rax, [rbp-%d]\t; var: $%s";
+	return placeholder.formatted( ctx.variables.get( node.name() ), node.name() );
+}
+
+/*
+ * variables: name -> rbp offset
+ */
+private record Context( Map<String, Integer> variables, int stackSize )
+{
+
 }
 
 }

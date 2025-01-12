@@ -4,12 +4,16 @@ import net.codemania.TokenStream;
 import net.codemania.ast.concrete.NodeASTRoot;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralInteger;
 import net.codemania.ast.concrete.expression.NodeExpressionLiteralString;
+import net.codemania.ast.concrete.expression.NodeExpressionVariable;
 import net.codemania.ast.concrete.procedure.NodeProcedureDeclaration;
 import net.codemania.ast.concrete.procedure.NodeProcedureDefinition;
-import net.codemania.ast.concrete.procedure.NodeProcedureInvocation;
+import net.codemania.ast.concrete.statements.NodeProcedureInvocation;
+import net.codemania.ast.concrete.statements.NodeVariableAssignment;
+import net.codemania.ast.concrete.statements.NodeVariableDeclaration;
 import net.codemania.ast.node_types.INodeExpression;
 import net.codemania.ast.node_types.INodeProcedure;
 import net.codemania.ast.node_types.INodeStatement;
+import net.codemania.ast.node_types.INodeVariableDeclaration;
 import net.codemania.lexing.BlockType;
 import net.codemania.lexing.Token;
 import net.codemania.lexing.TokenType;
@@ -74,6 +78,7 @@ public INodeStatement parseStatement () throws LexingException, ParserUnexpected
 {
 	INodeStatement statement = switch ( current.getType() ) {
 		case Tilde -> parseProcedureInvocation();
+		case KwSet -> parseAssignment();
 		default -> throw new ParserUnexpectedSymbolException( current );
 	};
 	return statement;
@@ -99,9 +104,29 @@ private NodeProcedureInvocation parseProcedureInvocation () throws LexingExcepti
 	consume( TokenType.BracketSquClose );
 	consume( TokenType.ArrowThinRight );
 	Token label = consume( TokenType.Label );
+	String returnVar = null;
+	if ( current.is( TokenType.ArrowThinRight ) ) {
+		consume( TokenType.ArrowThinRight );
+		Token variable = consume( TokenType.Variable );
+		returnVar = (String) variable.getVal();
+	}
 	consume( TokenType.Semicolon );
 
-	return new NodeProcedureInvocation( (String) label.getVal(), args, label.getPos() );
+	return new NodeProcedureInvocation( (String) label.getVal(), args, returnVar, label.getPos() );
+}
+
+private INodeVariableDeclaration parseAssignment () throws LexingException, ParserUnexpectedSymbolException
+{
+	consume( TokenType.KwSet );
+	String var = (String) consume( TokenType.Variable ).getVal();
+	if ( current.is( TokenType.Semicolon ) ) {
+		consume( TokenType.Semicolon );
+		return new NodeVariableDeclaration( var );
+	}
+	consume( TokenType.Comma );
+	INodeExpression value = parseExpression();
+	consume( TokenType.Semicolon );
+	return new NodeVariableAssignment( var, value );
 }
 
 private INodeExpression parseExpression () throws ParserUnexpectedSymbolException, LexingException
@@ -112,6 +137,8 @@ private INodeExpression parseExpression () throws ParserUnexpectedSymbolExceptio
 			new NodeExpressionLiteralInteger( (int) current.getVal(), current.getPos() );
 		case String ->
 			new NodeExpressionLiteralString( (String) current.getVal(), current.getPos() );
+		case Variable ->
+			new NodeExpressionVariable( (String) current.getVal(), current.getPos() );
 		default -> throw new ParserUnexpectedSymbolException( current );
 	};
 	readNext();

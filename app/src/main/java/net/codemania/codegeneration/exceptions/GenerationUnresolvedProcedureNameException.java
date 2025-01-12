@@ -6,6 +6,6 @@ public class GenerationUnresolvedProcedureNameException extends GenerationUnreso
 {
 public GenerationUnresolvedProcedureNameException ( String procName, FilePosition pos )
 {
-	super( "Unknown procedure %s at %s".formatted( procName, pos ) );
+	super( "Unknown procedure \"%s\" at %s".formatted( procName, pos ) );
 }
 }

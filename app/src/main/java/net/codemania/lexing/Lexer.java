@@ -74,14 +74,17 @@ public Token nextToken () throws LexingException
 		case 'i' -> lexIntegerLiteral();
 		case '.' -> lexLabel();
 		case '"' -> lexString();
+		case '$' -> lexVariable();
 		default -> null;
 
 	};
 	if ( token != null ) return token;
 
 	if ( Character.isUpperCase( current ) ) return lexKeyword();
-
-
+	// allow numbers without 'i' prefix for decimal
+	if ( Character.isDigit( current ) ) {
+		return lexIntegerLiteral();
+	}
 	throw new LexerUnexpectedCharacterException( current, "Invalid", pos() );
 }
 
@@ -121,7 +124,7 @@ private char readNext ()
 	try {
 		read = reader.read();
 	} catch ( IOException e ) {
-		Logger.warn( "IOException while reading file! inserting EOF instead! (Tipp: try " + "using `hasMoreTokens()` )" );
+		Logger.warn( "IOException while reading file! inserting EOF instead! (Tipp: try using `hasMoreTokens()` )" );
 		read = -1;
 	}
 	this.current = (char) read;
@@ -139,6 +142,16 @@ private void consume ( char c ) throws LexerUnexpectedCharacterException
 		throw new LexerUnexpectedCharacterException( current, c, pos() );
 	}
 	readNext();
+}
+
+private boolean consumeMaybe ( char c )
+{
+	if ( current == c ) {
+		readNext();
+		return true;
+	}
+	return false;
+
 }
 
 private void consume ( String s ) throws LexerUnexpectedCharacterException
@@ -209,7 +222,9 @@ private Token lexIntegerLiteral () throws LexingException
 	// irIVV	roman
 	//TODO for now only 'i15' is possible
 	Token token = new Token( TokenType.IntegerLiteral, pos() );
-	consume( 'i' );
+	if ( !consumeMaybe( 'i' ) && !Character.isDigit( current ) ) {
+		throw new LexerUnexpectedCharacterException( current, "decimal digit", pos() );
+	}
 	// mode: binary, senary, octal, decimal, hexadecimal, roman
 	NumberType mode = NumberType.Decimal;
 	if ( Character.isAlphabetic( current ) ) {
@@ -221,7 +236,7 @@ private Token lexIntegerLiteral () throws LexingException
 			case 'x' -> NumberType.Hexadecimal;
 			case 'r' -> NumberType.Roman;
 			default ->
-				throw new LexerUnexpectedCharacterException( current, "invalid integer " + "type", pos() );
+				throw new LexerUnexpectedCharacterException( current, "invalid integer type", pos() );
 		};
 		readNext();
 	}
@@ -353,6 +368,7 @@ private Token lexKeyword () throws LexingException
 	String keyword = sb.toString();
 	TokenType type = switch ( keyword ) {
 		case "PROC" -> TokenType.KwProcedure;
+		case "SET" -> TokenType.KwSet;
 		case "END" -> TokenType.END;
 		default -> throw new LexerUnknownKeywordException( keyword, startPos );
 	};
@@ -373,5 +389,17 @@ private Token lexKeyword () throws LexingException
 		};
 	}
 	return new Token( type, val, startPos );
+}
+
+private Token lexVariable () throws LexerUnexpectedCharacterException
+{
+	FilePosition start = pos();
+	consume( '$' );
+	StringBuilder sb = new StringBuilder();
+	while ( Character.isAlphabetic( current ) || current == '_' ) {
+		sb.append( current );
+		readNext();
+	}
+	return new Token( TokenType.Variable, sb.toString(), start );
 }
 }

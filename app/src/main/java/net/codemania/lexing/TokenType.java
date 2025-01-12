@@ -8,13 +8,15 @@ public enum TokenType
 	IntegerLiteral,
 	ArrowThinRight,
 	ArrowThickRight,
-	Label, // lowercase, usually procedure or variable names
+	Label, // lowercase, like procedure names
+	Variable, // Like $a
 	Semicolon,
 	Colon,
 	Comma,
 	String,
 	// Keywords
 	KwProcedure,
+	KwSet,
 
 	// ENDS
 	/*
