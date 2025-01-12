@@ -7,9 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="added variables and procedure return values">
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Added code examples in README.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,32 +113,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build LPaIL.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [run].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LPaIL:app [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LexerTest.canLexNumber.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.LexerTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build LPaIL.executor": "Run",
+    "Gradle.LPaIL [test].executor": "Run",
+    "Gradle.LPaIL:app [build].executor": "Run",
+    "Gradle.LPaIL:app [clean].executor": "Run",
+    "Gradle.LPaIL:app [run].executor": "Run",
+    "Gradle.LPaIL:app [test].executor": "Run",
+    "Gradle.LexerTest.canLexNumber.executor": "Debug",
+    "Gradle.LexerTest.executor": "Run",
+    "Gradle.TestAll.testexample.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/test/resources" />
@@ -147,19 +150,19 @@
       <recent name="$PROJECT_DIR$/app/src/examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.TestAll.testexample">
-    <configuration name="LPaIL:app [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.LPaIL [test]">
+    <configuration name="LPaIL [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value="build" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -266,11 +269,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.LPaIL [test]" />
         <item itemvalue="Gradle.TestAll.testexample" />
         <item itemvalue="Gradle.LPaIL:app [test]" />
         <item itemvalue="Gradle.LexerTest" />
         <item itemvalue="Gradle.LexerTest.canLexNumber" />
-        <item itemvalue="Gradle.LPaIL:app [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -309,7 +312,7 @@
       <workItem from="1736530305936" duration="9000" />
       <workItem from="1736530320282" duration="2000" />
       <workItem from="1736617808745" duration="13688000" />
-      <workItem from="1736696647500" duration="6934000" />
+      <workItem from="1736696647500" duration="10950000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />
@@ -367,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736703328655</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added code examples in README.md">
+      <option name="closed" value="true" />
+      <created>1736704521534</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736704521534</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +402,8 @@
     <MESSAGE value="added rudimentary parsing" />
     <MESSAGE value="Code generation" />
     <MESSAGE value="added variables and procedure return values" />
-    <option name="LAST_COMMIT_MESSAGE" value="added variables and procedure return values" />
+    <MESSAGE value="Added code examples in README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added code examples in README.md" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

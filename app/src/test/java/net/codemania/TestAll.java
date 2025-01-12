@@ -17,14 +17,15 @@ public void testexample () throws LexingException, ParsingException
 	Logger.getLogger().useColor( false );
 
 	String program = """
-		PROC .time;
+		PROC .time; (Header files are not supportet yet so all
+		C-functions that are used have to be declared manually)
 		PROC .srand;
 		PROC .rand;
 		PROC .printf;
 		PROC .div;
 		PROC .main:
-			SET $_time;
-			~[0]->.time->$_time;
+			SET $_time; (Variable declaration w/o assignment)
+			~[0]->.time->$_time; (Procedure invocation with return value)
 			~[$_time]->.srand;
 		
 			~[]->.rand->$num;

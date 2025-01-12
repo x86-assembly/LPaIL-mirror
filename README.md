@@ -23,13 +23,17 @@ You can assemble and link it using `nasm -felf64 <yourfile> -o a.o && gcc ./a.o 
 ```LPAIL
 PROC .printf;
 PROC .main:
+    (Comments are written like this)
 	~["Hello, World!"]->.printf;
 END-PROC
 ```
 
 ### using  C-functions with return values
 
-```LPAIL
+```LPAI?
+(Header files are not supported
+yet so all C-functions that are
+used have to be declared manually)
 PROC .time;
 PROC .srand;
 PROC .rand;

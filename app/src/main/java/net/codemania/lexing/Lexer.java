@@ -55,10 +55,20 @@ public List<Token> lexAll () throws LexingException
 	return tokens;
 }
 
+private void skipIrrelevant () throws LexerUnexpectedCharacterException
+{
+	skipWhitespace();
+	if ( current == '(' ) {
+		while ( current != ')' && hasMoreTokens() ) readNext();
+		consume( ')' );
+	}
+	skipWhitespace();
+}
+
 @Override
 public Token nextToken () throws LexingException
 {
-	skipWhitespace();
+	skipIrrelevant();
 	if ( !hasMoreTokens() ) {
 		return null;
 	}
@@ -75,6 +85,7 @@ public Token nextToken () throws LexingException
 		case '.' -> lexLabel();
 		case '"' -> lexString();
 		case '$' -> lexVariable();
+		// comments
 		default -> null;
 
 	};
@@ -402,4 +413,5 @@ private Token lexVariable () throws LexerUnexpectedCharacterException
 	}
 	return new Token( TokenType.Variable, sb.toString(), start );
 }
+
 }
