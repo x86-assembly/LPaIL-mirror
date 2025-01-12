@@ -7,23 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="Code generation">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/expression/NodeExpressionVariable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/statements/NodeVariableAssignment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/statements/NodeVariableDeclaration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/node_types/INodeVariableDeclaration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedVariableNameException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/LPaIL.iml" beforeDir="false" />
+    <list default="true" id="20061667-4fc4-4bcd-ae7c-8ceadb73d390" name="Changes" comment="added variables and procedure return values">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/procedure/NodeProcedureInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/ast/concrete/statements/NodeProcedureInvocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/NodeVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/exceptions/GenerationUnresolvedProcedureNameException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/codegeneration/x86_assembly/Generator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/lexing/TokenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/net/codemania/parsing/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/net/codemania/TestAll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +147,7 @@
       <recent name="$PROJECT_DIR$/app/src/examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LPaIL:app [test]">
+  <component name="RunManager" selected="Gradle.TestAll.testexample">
     <configuration name="LPaIL:app [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -174,28 +160,6 @@
         <option name="taskNames">
           <list>
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="LPaIL:app [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -276,13 +240,37 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="TestAll.testexample" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:test" />
+            <option value="--tests" />
+            <option value="&quot;net.codemania.TestAll.testexample&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.TestAll.testexample" />
         <item itemvalue="Gradle.LPaIL:app [test]" />
         <item itemvalue="Gradle.LexerTest" />
         <item itemvalue="Gradle.LexerTest.canLexNumber" />
         <item itemvalue="Gradle.LPaIL:app [build]" />
-        <item itemvalue="Gradle.LPaIL:app [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -321,7 +309,7 @@
       <workItem from="1736530305936" duration="9000" />
       <workItem from="1736530320282" duration="2000" />
       <workItem from="1736617808745" duration="13688000" />
-      <workItem from="1736696647500" duration="5822000" />
+      <workItem from="1736696647500" duration="6934000" />
     </task>
     <task id="LOCAL-00001" summary="started with lexer(doesn't work yet).">
       <option name="closed" value="true" />
@@ -371,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735784384489</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added variables and procedure return values">
+      <option name="closed" value="true" />
+      <created>1736703328655</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1736703328655</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +390,8 @@
     <MESSAGE value="Fixed bug in parser, improved Test&#10;&#10;skipwhitespace would run after checking for EOF, causing the switch to&#10;encounter unchecked EOF" />
     <MESSAGE value="added rudimentary parsing" />
     <MESSAGE value="Code generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code generation" />
+    <MESSAGE value="added variables and procedure return values" />
+    <option name="LAST_COMMIT_MESSAGE" value="added variables and procedure return values" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

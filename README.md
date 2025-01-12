@@ -2,7 +2,7 @@
 
 a compiler written in java for a custom language called `LPaIL`
 
-# Building
+## Building
 
 Eventually there will be just a single jar that can be used, but for now:
 
@@ -11,8 +11,34 @@ Eventually there will be just a single jar that can be used, but for now:
   `./gradlew test` (test results will be in
   [app/build/reports/tests/test/index.html](app/build/reports/tests/test/index.html) )
 
-## Running
+### Running
 
 The compiler generates x86_64 nasm assembly.
 You can assemble and link it using `nasm -felf64 <yourfile> -o a.o && gcc ./a.o -no-pie -o a.out`
 
+## Examples
+
+### Hello World
+
+```LPAIL
+PROC .printf;
+PROC .main:
+	~["Hello, World!"]->.printf;
+END-PROC
+```
+
+### using  C-functions with return values
+
+```LPAIL
+PROC .time;
+PROC .srand;
+PROC .rand;
+PROC .printf;
+PROC .main:
+	~[0]->.time->$_time;
+	~[$_time]->.srand;
+	
+	~[]->.rand->$num;
+	~["The random number is %d\n", $num]->.printf;
+END-PROC;
+```
