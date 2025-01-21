@@ -30,7 +30,7 @@ END-PROC
 
 ### using  C-functions with return values
 
-```LPAI?
+```LPAIL
 (Header files are not supported
 yet so all C-functions that are
 used have to be declared manually)
